@@ -30,12 +30,14 @@ const secsDeadLine = window.document.querySelector(".seconds");
 const giveaway = window.document.querySelector(".giveaway");
 const deadLine = window.document.querySelector(".deadline");
 
-const futureDate = new Date("September 20 , 2022 16:35:00");
-giveaway.textContent = `giveaway ends on ${
-  weekdays[futureDate.getDay()]
-}, ${futureDate.getDate()} ${
-  months[futureDate.getMonth()]
-} ${futureDate.getFullYear()}, ${futureDate.getHours()}:${futureDate.getMinutes()} PM`;
+let futureDate = new Date("September 6 , 2022 16:35:00");
+function renderDateInformation() {
+  giveaway.textContent = `giveaway ends on ${
+    weekdays[futureDate.getDay()]
+  }, ${futureDate.getDate()} ${
+    months[futureDate.getMonth()]
+  } ${futureDate.getFullYear()}, ${futureDate.getHours()}:${futureDate.getMinutes()} PM`;
+}
 
 window.setInterval(() => {
   // future time in milisecond
@@ -52,6 +54,11 @@ window.setInterval(() => {
 }, 1000);
 
 function renderDifference(days, hours, minutes, seconds) {
+  if (days < 1) {
+    futureDate = new Date(futureDate.setDate(futureDate.getDate() + 20));
+    renderDateInformation();
+  }
+
   if (days < 10) {
     days = `0${days}`;
   }
@@ -73,3 +80,5 @@ function renderDifference(days, hours, minutes, seconds) {
   minsDeadLine.textContent = minutes;
   secsDeadLine.textContent = seconds;
 }
+
+// function render
