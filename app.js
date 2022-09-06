@@ -27,22 +27,24 @@ const hoursDeadLine = window.document.querySelector(".hours");
 const minsDeadLine = window.document.querySelector(".minutes");
 const secsDeadLine = window.document.querySelector(".seconds");
 
+const items = window.document.querySelector(".deadline-format h4");
+
 const giveaway = window.document.querySelector(".giveaway");
 const deadLine = window.document.querySelector(".deadline");
 
-let futureDate = new Date("September 6 , 2022 16:35:00");
+let futureDate = new Date("September 6 , 2022 18:54:00");
 function renderDateInformation() {
   giveaway.textContent = `giveaway ends on ${
     weekdays[futureDate.getDay()]
   }, ${futureDate.getDate()} ${
     months[futureDate.getMonth()]
-  } ${futureDate.getFullYear()}, ${futureDate.getHours()}:${futureDate.getMinutes()} PM`;
+  } ${futureDate.getFullYear()}, ${futureDate.getHours()}:${futureDate.getMinutes()} `;
 }
 
-window.setInterval(() => {
+const interval = window.setInterval(() => {
   // future time in milisecond
   const currentDate = new Date();
-  let differenceDate = futureDate - currentDate;
+  const differenceDate = futureDate - currentDate;
   let noOfDays = Math.floor(differenceDate / (1000 * 60 * 60 * 24));
   let noOfSeconds = Math.floor((differenceDate / 1000) % 60);
   let noOfMinutes = Math.floor((differenceDate / (1000 * 60)) % 60);
@@ -74,11 +76,13 @@ function renderDifference(days, hours, minutes, seconds) {
   if (seconds < 10) {
     seconds = `0${seconds}`;
   }
+  if (seconds <= 0) {
+    clearInterval(interval);
+    deadLine.innerHTML = `<h4>Sorry giveaway has expired</h4>`;
+  }
 
   daysDeadLine.textContent = days;
   hoursDeadLine.textContent = hours;
   minsDeadLine.textContent = minutes;
   secsDeadLine.textContent = seconds;
 }
-
-// function render
